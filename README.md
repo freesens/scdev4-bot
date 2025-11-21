@@ -22,12 +22,16 @@
 * `File -> Settings -> Editor -> File Encodings -> Default encoding for properties files -> UTF-8`
 2. Lombok Plugin
 * `File -> Settings -> Build, Excution, Deployment -> Compiler -> Annotation Processors -> Enable Annotation Processing check`
-
+3. Runtime VM Option
+* `민감 정보는 별도 문의`
+```properties
+ -jasypt.encryptor.password={{secret key}}
+``` 
 
 ### Source
 * [GitHub](https://github.com/freesens/scdev4-bot)
 
 ```bash
-git clone https://github.com/freesens/scdev4-bot 
+git clone https://github.com/freesens/scdev4-bot.git 
 ```
 
