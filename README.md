@@ -11,7 +11,7 @@
 
 ## Project Convention
 ### Environment
-1. Java Version : 12
+1. Java Version : 21
 2. Spring Boot Version : v3.5.7
 3. Default Encoding : UTF-8
 4. Default File System : Windows
