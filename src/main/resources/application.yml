@@ -1,11 +1,24 @@
 server:
   port: 8081
-  servlet:
-    context-path: /scdev4-bot
 
 spring:
   application:
     name: scdev4-bot
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: ENC(1VlYyRLOSLyqLBZM0OqxkY+48W/cTtal3rdq/6LkbjT6ipP+I2Ls4+16Ry1AAdFTp094Oe3uq1Ow98WwzS8+kg==)
+    password: ENC(wprP+yhFTSjyaIMdgHsR5Ct/oAD3CH6e)
+    username: ENC(vhoYzRAAjfWlRrya46kY+g==)
+    driver-class-name: org.mariadb.jdbc.Driver
+
+mybatis:
+  configuration:
+    default-statement-timeout: 15
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/**/*.xml
 
 springdoc:
   api-docs:
@@ -18,3 +31,16 @@ springdoc:
     tags-sorter: alpha
   paths-to-match:
     - /api/v1/**
+
+telegram:
+  bot-token:
+    notice: ENC(Hgv8JmqabYLTbn8xiBuFySta7VgoQYifMQ5pzNpNXNbfUVJG1bRu62JoIn5MSVv6t3pR/p1YBzc=)
+    review: ENC(S+AVIJY/RUdEhkW0B0j1ZFpOuWhaM+l0bt382N7tl7OP5CTUVPmeEJxUqjKmFub7BoEqCUaFCL0=)
+  chat-id:
+    dev4-all: ENC(21CT4SoBbWo5JVcvvilwPSi7TLgCT2ZL)
+    dev4-employee: ENC(BoADG8NnR+AMmUzys38Yp5w1RQzFZc83)
+    code-review: ENC(tHlD1NsDzS6nrOB6A1ZtNaG+ImeiTBWZ)
+
+public-data:
+  api:
+    key: ENC(Jv2jrRljruPc2YmVdLAaOKVATnjwhRCxE4Gq5VSufBE72mIN1x4qb+v7hW+zOCwGQfbcYmycWEZPPoCZ5aHG4AiQmU0qT+c1gV929U2gigMqMCu8mubYQjhaGScuEQ1NwwiIgrnBx5dyX1Dbnjy+Bg==)

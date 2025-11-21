@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<mapper namespace="kr.co.pionnet.scdev4.bot.domain.restaurant.dao.RestaurantMapper">
+
+	<resultMap id="searchRestaurantHistResult" 	type="kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory">
+		<result property="seq"					column="seq" />
+		<result property="memNm"				column="mem_nm" />
+		<result property="restNm"				column="rest_nm" />
+		<result property="visitDt"				column="visit_dt" />
+		<result property="visitYN"				column="visit_yn" />
+		<result property="rtrNum"				column="rtr_num" />
+		<result property="memNum"				column="mem_num" />
+		<result property="createDt"				column="create_dt" />
+		<result property="updateDt"				column="update_dt" />
+	</resultMap>
+
+
+	<select id="searchResturantHistory" resultMap="searchRestaurantHistResult">
+		select * 
+		  from YY_RESTAURANT_HISTORY 
+		 where datediff(now(), visit_dt) <![CDATA[<=]]> 31;
+	</select>
+
+	<insert id="insertRestaurantHistory"  parameterType="kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory">
+		insert into YY_RESTAURANT_HISTORY(mem_nm, rest_nm, visit_dt, rtr_num, mem_num, create_dt, update_dt) 
+		values(
+		#{memNm}
+		,#{restNm}
+		,now()
+		,0
+		,0
+		,now()
+		,now()
+		);
+	</insert>
+	
+	<update id="updateRestaurantVisitYN" parameterType="kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory">
+		update YY_RESTAURANT_HISTORY
+   		set visit_yn = #{visitYN}, update_dt = NOW()
+   		where visit_dt = #{visitDt}
+	</update>
+	
+	<select id="getRestaurantVisitToday" resultMap="searchRestaurantHistResult">
+		select * from YY_RESTAURANT_HISTORY
+		where visit_dt = date_format(now(),'%Y-%m-%d') 
+		order by seq desc limit 1;
+	</select>
+	
+	<update id="updateRestaurantName" parameterType="kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory">
+		update YY_RESTAURANT_HISTORY
+   		set rest_nm = #{restNm}, update_dt = NOW()
+   		where visit_dt = #{visitDt}
+	</update>
+</mapper>

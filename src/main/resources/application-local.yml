@@ -1,0 +1,8 @@
+telegram:
+  bot-token:
+    notice: ENC(mvYEm13dQ2zVjXvdY4JIxPASO9St2rEluIG+1Dj9C6VI6y+tPNSGyYaj42RQAUNyuCq4ZvSSiO8=)
+    review: ENC(mvYEm13dQ2zVjXvdY4JIxPASO9St2rEluIG+1Dj9C6VI6y+tPNSGyYaj42RQAUNyuCq4ZvSSiO8=)
+  chat-id:
+    dev4-all: ENC(YG5f+oqroGA757WbL3sVtsciAH4XDnKG)
+    dev4-employee: ENC(YG5f+oqroGA757WbL3sVtsciAH4XDnKG)
+    code-review: ENC(YG5f+oqroGA757WbL3sVtsciAH4XDnKG)

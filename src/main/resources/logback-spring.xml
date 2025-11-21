@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--    <property name="appLogPath" value="${user.home}/logs"/>-->
+    <property name="appLogPath" value="/logs"/>
+    <property name="appName" value="scdev4-bot"/>
+    <property name="appLogFilePath" value="${appLogPath}/${appName}"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <springProfile name="local">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev,alp,prd">
+        <appender name="APP_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${appLogFilePath}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${appLogFilePath}.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>1GB</totalSizeCap>
+            </rollingPolicy>
+
+            <encoder>
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <root level="ERROR">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="APP_LOG_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

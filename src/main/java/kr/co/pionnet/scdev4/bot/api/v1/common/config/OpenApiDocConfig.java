@@ -16,7 +16,7 @@ public class OpenApiDocConfig {
         Info info = new Info()
                 .title("PIONNET SCDev4 - BOT API")
                 .version(appVersion)
-                .description("밥타임/휴가/코드리뷰 등등 잡다한 알림 전송을 담당합니다.")
+                .description("잡다한 알림 전송을 담당합니다.")
                 .termsOfService("http://swagger.io/terms/")
                 .license(new License()
                             .name("Apache License Version 2.0")
