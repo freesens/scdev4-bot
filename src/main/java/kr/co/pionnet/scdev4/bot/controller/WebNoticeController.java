@@ -41,7 +41,7 @@ public class WebNoticeController {
         this.restaurantHistoryService = restaurantHistoryService;
     }
 
-    @GetMapping("/lunchMenuCheckYN")
+    @RequestMapping("/lunchMenuCheckYN")
     public ModelAndView lunchMenuCheckYN(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView("lunchMenuCheckYN");
 
