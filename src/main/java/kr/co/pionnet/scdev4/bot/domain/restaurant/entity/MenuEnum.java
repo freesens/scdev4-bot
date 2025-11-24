@@ -2,7 +2,7 @@ package kr.co.pionnet.scdev4.bot.domain.restaurant.entity;
 
 public enum MenuEnum {
 	MENU1("menu01", "사미식당"), 
-	MENU2("menu02", "혼키"), 
+	MENU2("menu02", "서브웨이"), 
 	MENU3("menu03", "다온참치"), 
 	MENU4("menu04", "삼미당"), 
 	MENU5("menu05", "봉추찜닭"),
@@ -31,13 +31,13 @@ public enum MenuEnum {
 	MENU28("menu28", "노아식당"), 
 	MENU29("menu29", "육전국밥"), 
 	MENU30("menu30", "두찜"), 
-	MENU31("menu31", "사위식당"), 
+	MENU31("menu31", "요쇼쿠"), 
 	MENU32("menu32", "버거킹"),
 	MENU33("menu33", "신의한국수"),
 	MENU34("menu34", "금고깃집"),
 	MENU35("menu35", "직화장인"),
-	MENU36("menu36", "백소정"),
-	MENU37("menu37", "사위식당"),
+	MENU36("menu36", "청년다방"),
+	MENU37("menu37", "마곡사위식당"),
 	MENU38("menu38", "피자 배달"),
 	MENU39("menu39", "카파이카이"),
 	MENU40("menu40", "곤드레밥상"),
@@ -45,6 +45,16 @@ public enum MenuEnum {
 	MENU42("menu42", "바스버거"),
 	MENU43("menu43", "란콰이펑누들"),
 	MENU44("menu44", "또보겠지 떡볶이"),
+	MENU45("menu45", "보영만두"),
+	MENU46("menu46", "블리스버거"),
+	MENU47("menu47", "우동키노야"),
+	MENU48("menu48", "경아식당"),
+	MENU49("menu49", "코코이찌방야"),
+	MENU50("menu50", "해탄"),
+	MENU51("menu51", "넴넴"),
+	MENU52("menu52", "BBQ"),
+	MENU53("menu53", "오뼈집"),
+	MENU54("menu54", "유가네 닭갈비"),
 	MENU999("menu999", "분식 배달");
 
 	private final String code;
