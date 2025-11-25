@@ -1,9 +1,15 @@
 package kr.co.pionnet.scdev4.bot.domain.restaurant.entity;
 
+import kr.co.pionnet.scdev4.bot.domain.restaurant.dto.MenuResponseDto;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum MenuEnum {
 	MENU1("menu01", "사미식당"), 
 	MENU2("menu02", "서브웨이"), 
-	MENU3("menu03", "다온참치"), 
+	MENU3("menu03", "다온참치"),
 	MENU4("menu04", "삼미당"), 
 	MENU5("menu05", "봉추찜닭"),
 	MENU6("menu06", "오봉집"), 
@@ -21,7 +27,7 @@ public enum MenuEnum {
 	MENU18("menu18", "노브랜드버거"), 
 	MENU19("menu19", "어식한상"), 
 	MENU20("menu20", "종로계림닭도리탕"), 
-	MENU21("menu21", "이태리부대찌개"), 
+	MENU21("menu21", "이태리부대찌개"),
 	MENU22("menu22", "담방담방"), 
 	MENU23("menu23", "제주담돌"),
 	MENU24("menu24", "담솥"), 
@@ -89,5 +95,14 @@ public enum MenuEnum {
 			}
 		}
 		return null;
+	}
+
+	public static List<MenuResponseDto> convertToMenuResponseDtoList() {
+		return Arrays.stream(MenuEnum.values()).map(menu -> {
+            return MenuResponseDto.builder()
+                           .code(menu.getCode())
+                           .name(menu.getName())
+                           .build();
+		}).collect(Collectors.toList());
 	}
 }

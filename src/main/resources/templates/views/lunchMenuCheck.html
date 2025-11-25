@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <style>
+        #search_area {
+            height: 24px;
+            margin: 9px 5px 8px 0px;
+        }
+
+        .menu-value {
+            padding: 2.5px 5px 2.5px 5px;
+            width: 165px;
+        }
+
+        .menu-value:hover {
+            background-color: #D5D5D5;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="chooseLunchMenu">
+        <div class="lunchMentText">
+            <strong>점심 메뉴를 선택해주세요 :)</strong>
+        </div>
+        <form method="post" onsubmit="javascript:setMenuCode();" accept-charset="UTF-8" action="/notice/lunchMenuChecked">
+            <div id="submit_area">
+                <input type="text" id='search_area' name="menuName" size="20">
+                <input type="submit" id="submit-button" name="submitBtn" value="확인"
+                       size="10">
+            </div>
+            <input type="hidden" id='menuCode_area' name="menuCode">
+            <div id='autoMaker'></div>
+        </form>
+    </div>
+
+    <script th:inline="javascript">
+        const menuEnumList = [[${menuList}]];
+    </script>
+    <script>
+        const recommMenu = "[[${recommMenu}]]";
+
+        $('#search_area').keyup(
+            function() {
+                const searchText = $(this).val();
+                $('#autoMaker').children().remove();
+
+                if (searchText != '') {
+                    for (let i = 0; i < menuEnumList.length; i++) {
+                        if (menuEnumList[i].name.toUpperCase().indexOf(searchText.toUpperCase()) > -1 && menuEnumList[i].name != recommMenu) {
+                            $('#autoMaker').append(
+                                $('<div class="menu-value">').text(menuEnumList[i].name));
+                        }
+                    }
+
+                    $('#autoMaker').children().each(function() {
+                        $(this).click(function() {
+                            $('#search_area').val($(this).text());
+                        });
+                    });
+                }
+            });
+
+        function setMenuCode() {
+            $('#menuCode_area').val('');
+
+            const searchText = $('#search_area').val();
+
+            for (let i = 0; i < menuEnumList.length; i++) {
+                if (menuEnumList[i].name == searchText) {
+                    $('#menuCode_area').val(menuEnumList[i].code);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

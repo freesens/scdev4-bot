@@ -4,10 +4,12 @@ server:
 spring:
   application:
     name: scdev4-bot
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+  thymeleaf:
+    prefix: classpath:/templates/views/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: true
   datasource:
     url: ENC(1VlYyRLOSLyqLBZM0OqxkY+48W/cTtal3rdq/6LkbjT6ipP+I2Ls4+16Ry1AAdFTp094Oe3uq1Ow98WwzS8+kg==)
     password: ENC(wprP+yhFTSjyaIMdgHsR5Ct/oAD3CH6e)
