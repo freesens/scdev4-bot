@@ -1,3 +1,7 @@
+spring:
+  thymeleaf:
+    cache: false
+
 telegram:
   bot-token:
     notice: ENC(mvYEm13dQ2zVjXvdY4JIxPASO9St2rEluIG+1Dj9C6VI6y+tPNSGyYaj42RQAUNyuCq4ZvSSiO8=)

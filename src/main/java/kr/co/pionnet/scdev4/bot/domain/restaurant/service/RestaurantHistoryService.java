@@ -32,13 +32,6 @@ public class RestaurantHistoryService {
 	}
 
 	public void updateRestaurantVisitYN(RestaurantHistory restaurantHistory)  {
-//		Validator.throwIfEmpty(restaurantHistory.getVisitDt(), "업데이트 대상 방문일자 정보가 존재하지 않습니다.");
-//		if(!DateUtil.isValid(restaurantHistory.getVisitDt(), "yyyy-MM-dd")) {
-//			throw new ValidationException("업데이트 대상 방문일 날짜형식이 올바르지 않습니다.");
-//		}
-//		if(!YumConst.RESULT_YES.equals(restaurantHistory.getVisitYN())) {
-//			restaurantHistory.setVisitYN(YumConst.RESULT_NO);
-//		}
 
 		restaurantMapper.updateRestaurantVisitYN(restaurantHistory);
 	}
@@ -49,10 +42,6 @@ public class RestaurantHistoryService {
 	}
 	
 	public void updateRestaurantName(RestaurantHistory restaurantHistory) throws IOException {
-		//Validator.throwIfEmpty(restaurantHistory.getVisitDt(), "업데이트 대상 방문일자 정보가 존재하지 않습니다.");
-//		if(!DateUtil.isValid(restaurantHistory.getVisitDt(), "yyyy-MM-dd")) {
-//			throw new ValidationException("업데이트 대상 방문일 날짜형식이 올바르지 않습니다.");
-//		}
 
 		restaurantMapper.updateRestaurantName(restaurantHistory);
 	}
