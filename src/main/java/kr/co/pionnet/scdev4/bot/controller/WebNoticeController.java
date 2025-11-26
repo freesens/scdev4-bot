@@ -10,11 +10,13 @@ import kr.co.pionnet.scdev4.bot.domain.restaurant.service.RestaurantHistoryServi
 import kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -77,37 +79,60 @@ public class WebNoticeController {
         return mav;
     }
 
-    @RequestMapping("/lunchMenuChecked")
+    @GetMapping("/lunchMenuChecked")
     public void lunchMenuChecked(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         StringBuffer result = new StringBuffer();
         JSONObject resultJson = new JSONObject();
-
-        String visitYN = BotConst.RESULT_YES.equals(request.getParameter("visitYN")) ? BotConst.RESULT_YES : BotConst.RESULT_NO;
 
         RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
 
         try {
             String date = DateFormatUtils.format(new Date(),  "yyyy-MM-dd");
 
-            if (visitTodayInfo.getCreateDt().equals(visitTodayInfo.getUpdateDt()) && !publicDataApiUtil.isHoliday()) {
-                if (BotConst.RESULT_YES.equals(visitYN)) {
-                    restaurantHistoryService.updateRestaurantVisitYN(RestaurantHistory.builder()
-                                                                                      .visitDt(date)
-                                                                                      .visitYN(visitYN)
-                                                                                      .build());
+            if (visitTodayInfo != null
+                && visitTodayInfo.getCreateDt().equals(visitTodayInfo.getUpdateDt())
+                && !publicDataApiUtil.isHoliday()) {
 
-                    result.append("넵^^ 오늘 나온 메뉴는 드셨군요 ^^");
-                    telegramUtil.sendMessage(result.toString());
+                restaurantHistoryService.updateRestaurantVisitYN(RestaurantHistory.builder()
+                                                                                  .visitDt(date)
+                                                                                  .visitYN(BotConst.RESULT_YES)
+                                                                                  .build());
 
-                    return;
-                }
+                result.append("넵^^ 오늘 나온 메뉴는 드셨군요 ^^");
+                telegramUtil.sendMessage(result.toString());
+            } else {
+                resultJson.put("resultMessage", "이미 클릭되었습니다!!!");
+            }
+            resultJson.put("resultMessage", result.toString());
+        } catch (Exception e) {
+            resultJson.put("result", "Fail");
+            resultJson.put("failMessage", e.getMessage());
 
-                // 확인 버튼 클릭 시
+        }
+
+        result.setLength(0);
+        result.append(resultJson.toString());
+        flushData(response, result);
+    }
+
+    @PostMapping("/lunchMenuChecked")
+    public void lunchMenuCheckYN(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        StringBuffer result = new StringBuffer();
+        JSONObject resultJson = new JSONObject();
+
+        RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
+
+        try {
+            if (visitTodayInfo != null
+                && visitTodayInfo.getCreateDt().equals(visitTodayInfo.getUpdateDt())
+                && !publicDataApiUtil.isHoliday()) {
+
+                String date = DateFormatUtils.format(new Date(),  "yyyy-MM-dd");
                 String menuCode = request.getParameter("menuCode");
                 String newMenuName = request.getParameter("menuName");
 
                 if (menuCode != null && newMenuName != null) {
-                    if (!"".equals(menuCode)) {
+                    if (!StringUtils.EMPTY.equals(menuCode)) {
                         if(MenuEnum.isCodeExists(menuCode)) {
                             String choiceMenu = MenuEnum.getNameByCode(menuCode);
 
@@ -119,10 +144,10 @@ public class WebNoticeController {
                     } else {
                         restaurantHistoryService.updateRestaurantVisitYN(RestaurantHistory.builder()
                                                                                           .visitDt(date)
-                                                                                          .visitYN(visitYN)
+                                                                                          .visitYN(BotConst.RESULT_NO)
                                                                                           .build());
 
-                        if (!"".equals(newMenuName)) {
+                        if (!StringUtils.EMPTY.equals(newMenuName)) {
                             if (log.isDebugEnabled()) {
                                 log.debug("inputNewMenuName : " + newMenuName.toString());
                             }
