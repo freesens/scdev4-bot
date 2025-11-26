@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Component
@@ -26,7 +27,8 @@ public class TelegramUtil {
     }
 
     public void sendMessage(final String message, String botToken, String chatId) throws Exception {
-        String sendUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId;// + "&text=";
+        String sendUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId;
+        sendUrl += "&link_preview_options=" + URLEncoder.encode("{\"is_disabled\":true}", StandardCharsets.UTF_8);
 
         HttpsURLConnection conn = null;
         InputStreamReader is = null;
