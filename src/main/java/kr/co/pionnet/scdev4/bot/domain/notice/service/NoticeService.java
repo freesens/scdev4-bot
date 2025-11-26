@@ -57,7 +57,7 @@ public class NoticeService {
             Random rand = new Random();
             String menu = "";
             String firstMember = "";
-            String secondMember = "";
+            String secondMember;
             int randomNo;
             int count = 0;
 
@@ -94,7 +94,6 @@ public class NoticeService {
             }
 
             isRepeat = true;
-            isExist = false;
             count = 0;
 
             while (isRepeat && count < 100) {
@@ -120,8 +119,6 @@ public class NoticeService {
                 magicNo2 = rand.nextInt(MemberEnum.values().length);
             } while (randomNo == magicNo2);
             secondMember = MemberEnum.values()[magicNo2].getValue();
-
-
 
             result.append("오늘의 추천식당 : ").append(menu);
             result.append("\r\n마음에 안 드시면 ").append(firstMember).append("님이 정해주세요 !");
