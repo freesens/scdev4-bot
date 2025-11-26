@@ -190,9 +190,9 @@ public class NoticeService {
                 RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
                 if (visitTodayInfo != null) {
                     result.append(visitTodayInfo.getMemNm()).append("님").append(" 오늘 ")
-                          .append(visitTodayInfo.getRestNm()).append(" 드셨나요?\n\n");
-                    result.append("추천메뉴를 드셨다면 아래 링크를 클릭 해주세요\n").append("https://bit.ly/2H5fy3J")
-                          .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://bit.ly/2XCXVNz");
+                          .append(visitTodayInfo.getRestNm()).append(" 방문 하셨나요?\n\n");
+                    result.append("추천메뉴를 드셨다면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/zyGBK")
+                          .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/abIIr");
                     telegramUtil.sendMessage(result.toString(), botToken, chatId);
                 }
             }

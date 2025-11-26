@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "알림봇", description = "알림봇이 담당하는res 업무영역")
+@Tag(name = "알림봇", description = "텔레그램 채널로 메시지를 전송하는 API Section")
 @RequestMapping("api/v1/notice")
 public class NoticeController {
 
