@@ -46,3 +46,7 @@ telegram:
 public-data:
   api:
     key: ENC(Jv2jrRljruPc2YmVdLAaOKVATnjwhRCxE4Gq5VSufBE72mIN1x4qb+v7hW+zOCwGQfbcYmycWEZPPoCZ5aHG4AiQmU0qT+c1gV929U2gigMqMCu8mubYQjhaGScuEQ1NwwiIgrnBx5dyX1Dbnjy+Bg==)
+
+code-review:
+  target:
+    branch: master
