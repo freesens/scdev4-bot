@@ -3,7 +3,7 @@ package kr.co.pionnet.scdev4.bot.domain.restaurant.entity;
 public enum MemberEnum {
 	NAME1("파민"),
 	NAME2("자연"),
-	NAME3("돌+I"),
+	NAME3("돌\+I"),
 	NAME4("레몬"),
 	NAME5("제육"),
 	NAME6("위키"),
