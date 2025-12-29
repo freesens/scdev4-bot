@@ -101,11 +101,9 @@ public enum MenuEnum {
 	}
 
 	public static List<MenuResponseDto> convertToMenuResponseDtoList() {
-		return Arrays.stream(MenuEnum.values()).map(menu -> {
-            return MenuResponseDto.builder()
-                           .code(menu.getCode())
-                           .name(menu.getName())
-                           .build();
-		}).collect(Collectors.toList());
+		return Arrays.stream(MenuEnum.values()).map(menu -> MenuResponseDto.builder()
+                       .code(menu.getCode())
+                       .name(menu.getName())
+                       .build()).collect(Collectors.toList());
 	}
 }
