@@ -64,6 +64,27 @@ public enum MenuEnum {
 	MENU55("menu55", "일산칼국수"),
 	MENU56("menu56", "일일미미"),
 	MENU57("menu57", "옥딤섬"),
+    MENU58("menu58", "델리케밥"),
+    MENU59("menu59", "아우어루꼴라"),
+    MENU60("menu60", "라화방마라탕"),
+    MENU61("menu61", "타이반쩜"),
+    MENU62("menu62", "하양옥"),
+    MENU63("menu63", "규카츠정"),
+    MENU64("menu64", "계단라멘"),
+    MENU65("menu65", "스시풀"),
+    MENU66("menu66", "멘츠루"),
+    MENU67("menu67", "노아"),
+    MENU68("menu68", "계림"),
+    MENU69("menu69", "고메스퀘어"),
+    MENU70("menu70", "쏭타이치앙마이"),
+    MENU71("menu73", "홍차이"),
+    MENU72("menu74", "아웃백"),
+    MENU73("menu75", "세븐일레븐"),
+    MENU74("menu76", "고흥수산"),
+    MENU75("menu77", "잭슨피자"),
+    MENU76("menu78", "푸라닭"),
+    MENU77("menu79", "오토김밥"),
+    MENU78("menu80", "다이닝원"),
 	MENU999("menu999", "분식 배달");
 
 	private final String code;
@@ -101,11 +122,9 @@ public enum MenuEnum {
 	}
 
 	public static List<MenuResponseDto> convertToMenuResponseDtoList() {
-		return Arrays.stream(MenuEnum.values()).map(menu -> {
-            return MenuResponseDto.builder()
-                           .code(menu.getCode())
-                           .name(menu.getName())
-                           .build();
-		}).collect(Collectors.toList());
+		return Arrays.stream(MenuEnum.values()).map(menu -> MenuResponseDto.builder()
+                       .code(menu.getCode())
+                       .name(menu.getName())
+                       .build()).collect(Collectors.toList());
 	}
 }
