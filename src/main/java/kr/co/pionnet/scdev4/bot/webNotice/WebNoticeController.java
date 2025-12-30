@@ -27,6 +27,7 @@ public class WebNoticeController {
         } catch (IllegalStateException e) {
             ModelAndView mav = new ModelAndView("lunchMenuError");
             mav.addObject("message", NoticeMessage.clientMessage.ALREADY_CLICKED);
+
             return mav;
         }
     }
