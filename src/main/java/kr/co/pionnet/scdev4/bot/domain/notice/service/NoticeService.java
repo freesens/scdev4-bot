@@ -141,7 +141,7 @@ public class NoticeService {
             resultJson.put("result", "Success");
         } finally {
             result.setLength(0);
-            result.append(resultJson.toString());
+            result.append(resultJson);
         }
 
         return result.toString();
@@ -149,7 +149,7 @@ public class NoticeService {
 
     public String lunchTime() throws Exception {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         JSONObject resultJson = new JSONObject();
 
         try {
@@ -169,7 +169,7 @@ public class NoticeService {
             resultJson.put("result", "Success");
         } finally {
             result.setLength(0);
-            result.append(resultJson.toString());
+            result.append(resultJson);
         }
 
         return result.toString();
@@ -201,7 +201,7 @@ public class NoticeService {
     }
 
     public String dinnerTime() throws Exception {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         JSONObject resultJson = new JSONObject();
 
         try {
@@ -229,14 +229,14 @@ public class NoticeService {
             resultJson.put("result", "Success");
         } finally {
             result.setLength(0);
-            result.append(resultJson.toString());
+            result.append(resultJson);
         }
 
         return result.toString();
     }
 
     public String checkAccount() throws Exception {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         JSONObject resultJson = new JSONObject();
 
         try {
@@ -256,7 +256,7 @@ public class NoticeService {
             resultJson.put("result", "Success");
         } finally {
             result.setLength(0);
-            result.append(resultJson.toString());
+            result.append(resultJson);
         }
 
         return result.toString();

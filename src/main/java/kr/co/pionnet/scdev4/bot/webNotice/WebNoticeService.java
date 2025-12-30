@@ -1,5 +1,6 @@
 package kr.co.pionnet.scdev4.bot.webNotice;
 
+import kr.co.pionnet.scdev4.bot.api.v1.common.exception.LunchMenuActionNotAllowedException;
 import kr.co.pionnet.scdev4.bot.domain.common.constant.BotConst;
 import kr.co.pionnet.scdev4.bot.domain.common.util.PublicDataApiUtil;
 import kr.co.pionnet.scdev4.bot.domain.common.util.TelegramUtil;
@@ -26,7 +27,7 @@ public class WebNoticeService {
         RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
 
         if (isLunchMenuActionNotAllowed(visitTodayInfo)) {
-            throw new IllegalStateException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
+            throw new LunchMenuActionNotAllowedException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
         }
 
         return new LunchMenuData(
@@ -37,7 +38,7 @@ public class WebNoticeService {
 
     public String confirmLunchMenuVisited() throws Exception {
         if (isLunchMenuActionNotAllowed(restaurantHistoryService.getRestaurantVisitToday())) {
-            throw new IllegalStateException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
+            throw new LunchMenuActionNotAllowedException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
         }
 
         restaurantHistoryService.updateRestaurantVisitYN(
@@ -54,7 +55,7 @@ public class WebNoticeService {
 
     public String rejectLunchMenu(String menuCode, String newMenuName) throws Exception {
         if (isLunchMenuActionNotAllowed(restaurantHistoryService.getRestaurantVisitToday())) {
-            throw new IllegalStateException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
+            throw new LunchMenuActionNotAllowedException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
         }
 
         String today = DateFormatUtils.format(new Date(), "yyyy-MM-dd");
