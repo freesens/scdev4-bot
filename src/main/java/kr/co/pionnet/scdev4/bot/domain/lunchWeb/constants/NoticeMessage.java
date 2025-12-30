@@ -1,4 +1,4 @@
-package kr.co.pionnet.scdev4.bot.webNotice;
+package kr.co.pionnet.scdev4.bot.domain.lunchWeb.constants;
 
 public final class NoticeMessage {
     public interface clientMessage {

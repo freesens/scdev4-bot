@@ -1,7 +1,8 @@
-package kr.co.pionnet.scdev4.bot.webNotice;
+package kr.co.pionnet.scdev4.bot.domain.lunchWeb.controller;
 
 import kr.co.pionnet.scdev4.bot.domain.common.dto.v1.ResponseV1;
 import kr.co.pionnet.scdev4.bot.domain.common.entity.ApiResultEnum;
+import kr.co.pionnet.scdev4.bot.domain.lunchWeb.service.WebNoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

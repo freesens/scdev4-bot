@@ -47,7 +47,7 @@ public class NoticeService {
 
     public String lunchMenu() throws Exception {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         JSONObject resultJson = new JSONObject();
 
         try {
@@ -177,7 +177,7 @@ public class NoticeService {
 
     public String lunchMenuCheck() throws Exception {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         try {
             String botToken = BOT_TOKEN_NOTICE;

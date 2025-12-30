@@ -1,4 +1,4 @@
-package kr.co.pionnet.scdev4.bot.webNotice;
+package kr.co.pionnet.scdev4.bot.domain.lunchWeb.dto;
 
 import kr.co.pionnet.scdev4.bot.domain.restaurant.dto.MenuResponseDto;
 import lombok.Getter;

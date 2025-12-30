@@ -1,5 +1,8 @@
-package kr.co.pionnet.scdev4.bot.webNotice;
+package kr.co.pionnet.scdev4.bot.domain.lunchWeb.controller;
 
+import kr.co.pionnet.scdev4.bot.domain.lunchWeb.dto.LunchMenuData;
+import kr.co.pionnet.scdev4.bot.domain.lunchWeb.constants.NoticeMessage;
+import kr.co.pionnet.scdev4.bot.domain.lunchWeb.service.WebNoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
