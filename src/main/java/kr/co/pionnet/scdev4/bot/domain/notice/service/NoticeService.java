@@ -43,71 +43,58 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            if (publicDataApiUtil.isHoliday()) {
-                resultJson.put("result", "Holiday");
-                return resultJson.toString();
+            if (!publicDataApiUtil.isHoliday()) {
+                List<RestaurantHistory> restaurantHistoryList = restaurantHistoryService.selectRestaurantHistory();
+
+                Set<String> visitedRestaurants = restaurantHistoryList.stream()
+                        .filter(h -> BotConst.RESULT_YES.equals(h.getVisitYN()))
+                        .map(RestaurantHistory::getRestNm)
+                        .collect(Collectors.toSet());
+
+                List<MenuEnum> availableMenus = Arrays.stream(MenuEnum.values())
+                        .filter(menu -> !visitedRestaurants.contains(menu.getName()))
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                if (availableMenus.isEmpty()) {
+                    availableMenus = new ArrayList<>(Arrays.asList(MenuEnum.values()));
+                }
+
+                Collections.shuffle(availableMenus);
+                String selectedMenu = availableMenus.getFirst().getName();
+
+                Set<String> recentMembers = restaurantHistoryList.stream()
+                        .map(RestaurantHistory::getMemNm)
+                        .collect(Collectors.toSet());
+
+                List<MemberEnum> availableMembers = Arrays.stream(MemberEnum.values())
+                        .filter(m -> !recentMembers.contains(m.getValue()))
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                if (availableMembers.isEmpty()) {
+                    availableMembers = new ArrayList<>(Arrays.asList(MemberEnum.values()));
+                }
+
+                Collections.shuffle(availableMembers);
+                String firstMember = availableMembers.getFirst().getValue();
+                String secondMember = availableMembers.get(1).getValue();
+
+                String message = String.format(
+                        "오늘의 추천식당 : %s\r\n마음에 안 드시면 %s님이 정해주세요 !\r\n부재시 %s님이 정해주세요 !",
+                        selectedMenu, firstMember, secondMember
+                );
+
+                log.debug("Message: {}", message);
+
+                RestaurantHistory newHistory = RestaurantHistory.builder()
+                        .restNm(selectedMenu)
+                        .memNm(firstMember)
+                        .build();
+                restaurantHistoryService.insertRestaurantHistory(newHistory);
+
+                telegramUtil.sendMessage(message, BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
+
+                resultJson.put("result", "Success");
             }
-
-            List<RestaurantHistory> restaurantHistoryList = restaurantHistoryService.selectRestaurantHistory();
-
-            Set<String> visitedRestaurants = restaurantHistoryList.stream()
-                    .filter(h -> BotConst.RESULT_YES.equals(h.getVisitYN()))
-                    .map(RestaurantHistory::getRestNm)
-                    .collect(Collectors.toSet());
-
-            List<MenuEnum> availableMenus = Arrays.stream(MenuEnum.values())
-                    .filter(menu -> !visitedRestaurants.contains(menu.getName()))
-                    .toList();
-
-            if (availableMenus.isEmpty()) {
-                availableMenus = new ArrayList<>(Arrays.asList(MenuEnum.values()));
-            } else {
-                availableMenus = new ArrayList<>(availableMenus);
-            }
-
-            Collections.shuffle(availableMenus);
-            String selectedMenu = availableMenus.getFirst().getName();
-
-            Set<String> recentMembers = restaurantHistoryList.stream()
-                    .map(RestaurantHistory::getMemNm)
-                    .collect(Collectors.toSet());
-
-            List<MemberEnum> availableMembers = Arrays.stream(MemberEnum.values())
-                    .filter(m -> !recentMembers.contains(m.getValue()))
-                    .toList();
-
-            if (availableMembers.isEmpty()) {
-                availableMembers = new ArrayList<>(Arrays.asList(MemberEnum.values()));
-            } else {
-                availableMembers = new ArrayList<>(availableMembers);
-            }
-
-            Collections.shuffle(availableMembers);
-            String firstMember = availableMembers.getFirst().getValue();
-            String secondMember = Arrays.stream(MemberEnum.values())
-                    .map(MemberEnum::getValue)
-                    .filter(name -> !name.equals(firstMember))
-                    .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
-                        Collections.shuffle(list);
-                        return list.getFirst();
-                    }));
-
-            String message = String.format(
-                    "오늘의 추천식당 : %s\r\n마음에 안 드시면 %s님이 정해주세요 !\r\n부재시 %s님이 정해주세요 !",
-                    selectedMenu, firstMember, secondMember
-            );
-
-            log.debug("Message: {}", message);
-
-            telegramUtil.sendMessage(message, BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
-
-            RestaurantHistory newHistory = RestaurantHistory.builder()
-                    .restNm(selectedMenu)
-                    .memNm(firstMember)
-                    .build();
-            restaurantHistoryService.insertRestaurantHistory(newHistory);
-
-            resultJson.put("result", "Success");
         } catch (Exception e) {
             log.error("lunchMenu Error", e);
             resultJson.put("result", "Error");
