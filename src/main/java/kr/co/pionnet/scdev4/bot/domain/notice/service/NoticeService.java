@@ -10,18 +10,23 @@ import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.MemberEnum;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.MenuEnum;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.service.RestaurantHistoryService;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.vo.RestaurantHistory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class NoticeService {
     @Value("${telegram.bot-token.notice}")
     private String BOT_TOKEN_NOTICE;
@@ -34,117 +39,67 @@ public class NoticeService {
     private final PublicDataApiUtil publicDataApiUtil;
     private final RestaurantHistoryService restaurantHistoryService;
 
-    @Autowired
-    public NoticeService(
-        TelegramUtil telegramUtil,
-        PublicDataApiUtil publicDataApiUtil,
-        RestaurantHistoryService restaurantHistoryService
-    ) {
-        this.telegramUtil = telegramUtil;
-        this.publicDataApiUtil = publicDataApiUtil;
-        this.restaurantHistoryService = restaurantHistoryService;
-    }
-
-    public String lunchMenu() throws Exception {
-
-        StringBuilder result = new StringBuilder();
+    public String lunchMenu() {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4;
-
-            Random rand = new Random();
-            String menu = "";
-            String firstMember = "";
-            String secondMember;
-            int randomNo;
-            int count = 0;
-
-            randomNo = rand.nextInt(LunchMentEnum.values().length);
-
-            boolean isRepeat = true;
-            boolean isExist;
-
-            Date now = new Date();
-            for (int i = 0; i <= now.getDay(); i++) {
-                randomNo = rand.nextInt(rand.nextInt(now.getDay()) + 1);
-            }
-
-            List<RestaurantHistory> restaurantHistoryList = restaurantHistoryService.selectRestaurantHistory();
-
-            while (isRepeat && count < 100) {
-                count++;
-                randomNo = rand.nextInt(MenuEnum.values().length);
-
-                menu = MenuEnum.values()[randomNo].getName();
-
-                isExist = false;
-                for (int i = 0; i < restaurantHistoryList.size(); i++) {
-                    if (BotConst.RESULT_YES.equals(restaurantHistoryList.get(i).getVisitYN())
-                        && restaurantHistoryList.get(i).getRestNm().equals(menu)) {
-                        isExist = true;
-                        break;
-                    }
-                }
-
-                if (!isExist) {
-                    isRepeat = false;
-                }
-            }
-
-            isRepeat = true;
-            count = 0;
-
-            while (isRepeat && count < 100) {
-                count++;
-                randomNo = rand.nextInt(MemberEnum.values().length);
-                firstMember = MemberEnum.values()[randomNo].getValue();
-
-                isExist = false;
-                for (RestaurantHistory history : restaurantHistoryList) {
-                    if (history.getMemNm().equals(firstMember)) {
-                        isExist = true;
-                        break;
-                    }
-                }
-
-                if (!isExist) {
-                    isRepeat = false;
-                }
-            }
-
-            int magicNo2;
-            do {
-                magicNo2 = rand.nextInt(MemberEnum.values().length);
-            } while (randomNo == magicNo2);
-            secondMember = MemberEnum.values()[magicNo2].getValue();
-
-            result.append("오늘의 추천식당 : ").append(menu);
-            result.append("\r\n마음에 안 드시면 ").append(firstMember).append("님이 정해주세요 !");
-            result.append("\r\n부재시 ").append(secondMember).append("님이 정해주세요 !");
-
-            RestaurantHistory restaurantHistory = RestaurantHistory.builder()
-                                                                   .restNm(menu)
-                                                                   .memNm(firstMember)
-                                                                   .build();
-
-            if (log.isDebugEnabled()) {
-                log.debug(result.toString());
-            }
-
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
-                restaurantHistoryService.insertRestaurantHistory(restaurantHistory);
-            }
+                List<RestaurantHistory> restaurantHistoryList = restaurantHistoryService.selectRestaurantHistory();
 
-            resultJson.put("result", "Success");
-        } finally {
-            result.setLength(0);
-            result.append(resultJson);
+                Set<String> visitedRestaurants = restaurantHistoryList.stream()
+                        .filter(h -> BotConst.RESULT_YES.equals(h.getVisitYN()))
+                        .map(RestaurantHistory::getRestNm)
+                        .collect(Collectors.toSet());
+
+                List<MenuEnum> availableMenus = Arrays.stream(MenuEnum.values())
+                        .filter(menu -> !visitedRestaurants.contains(menu.getName()))
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                if (availableMenus.isEmpty()) {
+                    availableMenus = new ArrayList<>(Arrays.asList(MenuEnum.values()));
+                }
+
+                Collections.shuffle(availableMenus);
+                String selectedMenu = availableMenus.getFirst().getName();
+
+                Set<String> recentMembers = restaurantHistoryList.stream()
+                        .map(RestaurantHistory::getMemNm)
+                        .collect(Collectors.toSet());
+
+                List<MemberEnum> availableMembers = Arrays.stream(MemberEnum.values())
+                        .filter(m -> !recentMembers.contains(m.getValue()))
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                if (availableMembers.isEmpty()) {
+                    availableMembers = new ArrayList<>(Arrays.asList(MemberEnum.values()));
+                }
+
+                Collections.shuffle(availableMembers);
+                String firstMember = availableMembers.getFirst().getValue();
+                String secondMember = availableMembers.get(1).getValue();
+
+                String message = String.format(
+                        "오늘의 추천식당 : %s\r\n마음에 안 드시면 %s님이 정해주세요 !\r\n부재시 %s님이 정해주세요 !",
+                        selectedMenu, firstMember, secondMember
+                );
+
+                RestaurantHistory newHistory = RestaurantHistory.builder()
+                        .restNm(selectedMenu)
+                        .memNm(firstMember)
+                        .build();
+                restaurantHistoryService.insertRestaurantHistory(newHistory);
+
+                telegramUtil.sendMessage(message, BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
+
+                resultJson.put("result", "Success");
+            }
+        } catch (Exception e) {
+            log.error("lunchMenu Error", e);
+            resultJson.put("result", "Error");
+            resultJson.put("message", e.getMessage());
         }
 
-        return result.toString();
+        return resultJson.toString();
     }
 
     public String lunchTime() throws Exception {
@@ -153,17 +108,13 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
-            Random rand = new Random();
             int value;
 
-            value = rand.nextInt(LunchMentEnum.values().length);
+            value = new Random().nextInt(LunchMentEnum.values().length);
             result.append(LunchMentEnum.values()[value].getValue());
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
@@ -180,9 +131,6 @@ public class NoticeService {
         StringBuilder result = new StringBuilder();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4;
-
             if (!publicDataApiUtil.isHoliday()) {
                 RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
                 if (visitTodayInfo != null) {
@@ -190,7 +138,7 @@ public class NoticeService {
                           .append(visitTodayInfo.getRestNm()).append(" 방문 하셨나요?\n\n");
                     result.append("추천메뉴를 드셨다면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/zyGBK")
                           .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/abIIr");
-                    telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                    telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
                 }
             }
         } finally {
@@ -205,12 +153,8 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
             String bar;
-            Random rand = new Random();
-            int value = rand.nextInt(5);
+            int value = new Random().nextInt(5);
 
             bar = BarEnum.values()[value].getValue();
 
@@ -223,7 +167,7 @@ public class NoticeService {
             }
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
@@ -240,9 +184,6 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
             result.append("마당 계정 잠기거나 삭제되지 않도록 한번씩 접속 해주세요.");
 
             if (log.isDebugEnabled()) {
@@ -250,7 +191,7 @@ public class NoticeService {
             }
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
