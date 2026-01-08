@@ -83,8 +83,6 @@ public class NoticeService {
                         selectedMenu, firstMember, secondMember
                 );
 
-                log.debug("Message: {}", message);
-
                 RestaurantHistory newHistory = RestaurantHistory.builder()
                         .restNm(selectedMenu)
                         .memNm(firstMember)
@@ -110,17 +108,13 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
-            Random rand = new Random();
             int value;
 
-            value = rand.nextInt(LunchMentEnum.values().length);
+            value = new Random().nextInt(LunchMentEnum.values().length);
             result.append(LunchMentEnum.values()[value].getValue());
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
@@ -137,9 +131,6 @@ public class NoticeService {
         StringBuilder result = new StringBuilder();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4;
-
             if (!publicDataApiUtil.isHoliday()) {
                 RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
                 if (visitTodayInfo != null) {
@@ -147,7 +138,7 @@ public class NoticeService {
                           .append(visitTodayInfo.getRestNm()).append(" 방문 하셨나요?\n\n");
                     result.append("추천메뉴를 드셨다면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/zyGBK")
                           .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/abIIr");
-                    telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                    telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
                 }
             }
         } finally {
@@ -162,12 +153,8 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
             String bar;
-            Random rand = new Random();
-            int value = rand.nextInt(5);
+            int value = new Random().nextInt(5);
 
             bar = BarEnum.values()[value].getValue();
 
@@ -180,7 +167,7 @@ public class NoticeService {
             }
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
@@ -197,9 +184,6 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            String botToken = BOT_TOKEN_NOTICE;
-            String chatId = CHAT_ID_SCDEV4_ALL;
-
             result.append("마당 계정 잠기거나 삭제되지 않도록 한번씩 접속 해주세요.");
 
             if (log.isDebugEnabled()) {
@@ -207,7 +191,7 @@ public class NoticeService {
             }
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), botToken, chatId);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
