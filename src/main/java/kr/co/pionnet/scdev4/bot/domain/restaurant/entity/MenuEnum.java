@@ -15,7 +15,7 @@ public enum MenuEnum {
 	MENU6("menu06", "오봉집"), 
 	MENU7("menu07", "고반식당"), 
 	MENU8("menu08", "남다른감자탕"),
-	MENU9("menu09", "멘지"), 
+	MENU9("menu09", "맘스푸드"),
 	MENU10("menu10", "등초마라탕"),
 	MENU11("menu11", "닭묵"), 
 	MENU12("menu12", "센몬텐"), 

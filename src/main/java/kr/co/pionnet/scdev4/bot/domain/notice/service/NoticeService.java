@@ -76,7 +76,18 @@ public class NoticeService {
 
                 Collections.shuffle(availableMembers);
                 String firstMember = availableMembers.getFirst().getValue();
-                String secondMember = availableMembers.get(1).getValue();
+                String secondMember;
+
+                if (availableMembers.size() >= 2) {
+                    secondMember = availableMembers.get(1).getValue();
+                } else {
+                    List<MemberEnum> memberListExcludeFirst = Arrays.stream(MemberEnum.values())
+                            .filter(memberEnum -> !memberEnum.getValue().equals(firstMember))
+                            .collect(Collectors.toList());
+
+                    Collections.shuffle(memberListExcludeFirst);
+                    secondMember = memberListExcludeFirst.getFirst().getValue();
+                }
 
                 String message = String.format(
                         "오늘의 추천식당 : %s\r\n마음에 안 드시면 %s님이 정해주세요 !\r\n부재시 %s님이 정해주세요 !",
@@ -135,9 +146,9 @@ public class NoticeService {
                 RestaurantHistory visitTodayInfo = restaurantHistoryService.getRestaurantVisitToday();
                 if (visitTodayInfo != null) {
                     result.append(visitTodayInfo.getMemNm()).append("님").append(" 오늘 ")
-                          .append(visitTodayInfo.getRestNm()).append(" 방문 하셨나요?\n\n");
+                            .append(visitTodayInfo.getRestNm()).append(" 방문 하셨나요?\n\n");
                     result.append("추천메뉴를 드셨다면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/zyGBK")
-                          .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/abIIr");
+                            .append("\n\n추천메뉴를 안드셨으면 아래 링크를 클릭 해주세요\n").append("https://shorturl.at/abIIr");
                     telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
                 }
             }
@@ -159,8 +170,8 @@ public class NoticeService {
             bar = BarEnum.values()[value].getValue();
 
             result.append(bar).append("\r\n").append(bar)
-                  .append("\r\n\r\n저녁 식사하실 분만 말씀해주세요.\n미리 말씀 안 해주시면 법카는 집에 갑니다.\r\n\r\n").append(bar).append("\r\n")
-                  .append(bar);
+                    .append("\r\n\r\n저녁 식사하실 분만 말씀해주세요.\n미리 말씀 안 해주시면 법카는 집에 갑니다.\r\n\r\n").append(bar).append("\r\n")
+                    .append(bar);
 
             if (log.isDebugEnabled()) {
                 log.debug(result.toString());
