@@ -38,7 +38,7 @@ public class WebNoticeService {
         );
     }
 
-    public String confirmLunchMenuVisited() throws Exception {
+    public synchronized String confirmLunchMenuVisited() throws Exception {
         if (isLunchMenuActionNotAllowed(restaurantHistoryService.getRestaurantVisitToday())) {
             throw new LunchMenuActionNotAllowedException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
         }
@@ -55,7 +55,7 @@ public class WebNoticeService {
         return NoticeMessage.clientMessage.LUNCH_VISITED;
     }
 
-    public String rejectLunchMenu(String menuCode, String newMenuName) throws Exception {
+    public synchronized String rejectLunchMenu(String menuCode, String newMenuName) throws Exception {
         if (isLunchMenuActionNotAllowed(restaurantHistoryService.getRestaurantVisitToday())) {
             throw new LunchMenuActionNotAllowedException(NoticeMessage.LogMessage.NOT_ALLOWED_LUNCH);
         }

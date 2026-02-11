@@ -28,7 +28,7 @@
         <div class="lunchMentText">
             <strong>점심 메뉴를 선택해주세요 :)</strong>
         </div>
-        <form method="post" onsubmit="javascript:setMenuCode();" accept-charset="UTF-8" action="/notice/lunchMenuChecked">
+        <form id="lunchForm" method="post" accept-charset="UTF-8" action="/notice/lunchMenuChecked">
             <div id="submit_area">
                 <input type="text" id='search_area' name="menuName" size="20">
                 <input type="submit" id="submit-button" name="submitBtn" value="확인"
@@ -44,6 +44,8 @@
     </script>
     <script>
         const recommMenu = "[[${recommMenu}]]";
+
+        let isSubmit = false;
 
         $('#search_area').keyup(
             function() {
@@ -77,6 +79,21 @@
                 }
             }
         }
+
+        $('#lunchForm').on('submit', function() {
+            if (isSubmit) {
+                return false;
+            }
+
+            setMenuCode();
+
+            isSubmit = true;
+
+            $('#submit-button').prop('disabled', true);
+            $('#submit-button').val('처리중..');
+
+            return true;
+        });
     </script>
 </body>
 </html>
