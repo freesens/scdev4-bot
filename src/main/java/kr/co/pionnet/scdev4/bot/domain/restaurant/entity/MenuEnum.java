@@ -33,7 +33,7 @@ public enum MenuEnum {
 	MENU24("menu24", "담솥"), 
 	MENU25("menu25", "홍박식당"), 
 	MENU26("menu26", "해촌샤브칼국수"), 
-	MENU27("menu27", "이차이"),
+	MENU27("menu27", "김치옥"),
 	MENU28("menu28", "노아식당"), 
 	MENU29("menu29", "육전국밥"), 
 	MENU30("menu30", "두찜"), 
