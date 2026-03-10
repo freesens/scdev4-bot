@@ -15,7 +15,11 @@ public enum MenuEnum {
 	MENU6("menu06", "오봉집"), 
 	MENU7("menu07", "고반식당"), 
 	MENU8("menu08", "남다른감자탕"),
+<<<<<<< HEAD
 	MENU9("menu09", "옥딤섬"),
+=======
+	MENU9("menu09", "맘스푸드"),
+>>>>>>> master
 	MENU10("menu10", "등초마라탕"),
 	MENU11("menu11", "일일미미"),
 	MENU12("menu12", "센몬텐"), 
@@ -62,7 +66,28 @@ public enum MenuEnum {
 	MENU53("menu53", "오뼈집"),
 	MENU54("menu54", "유가네 닭갈비"),
 	MENU55("menu55", "일산칼국수"),
+<<<<<<< HEAD
 	MENU56("menu56", "맛또아순대국"),
+=======
+	MENU56("menu56", "일일미미"),
+	MENU57("menu57", "옥딤섬"),
+    MENU58("menu58", "델리케밥"),
+    MENU59("menu59", "아우어루꼴라"),
+    MENU60("menu60", "라화방마라탕"),
+    MENU61("menu61", "타이반쩜"),
+    MENU62("menu62", "하양옥"),
+    MENU63("menu63", "규카츠정"),
+    MENU64("menu64", "다이닝원"),
+    MENU65("menu65", "스시풀"),
+    MENU66("menu66", "멘츠루"),
+    MENU67("menu67", "노아"),
+    MENU68("menu68", "오토김밥 배달"),
+    MENU69("menu69", "고메스퀘어"),
+    MENU70("menu70", "쏭타이치앙마이"),
+    MENU71("menu73", "잭슨피자 배달"),
+    MENU72("menu74", "아웃백"),
+    MENU73("menu75", "푸라닭"),
+>>>>>>> master
 	MENU999("menu999", "분식 배달");
 
 	private final String code;
@@ -100,11 +125,9 @@ public enum MenuEnum {
 	}
 
 	public static List<MenuResponseDto> convertToMenuResponseDtoList() {
-		return Arrays.stream(MenuEnum.values()).map(menu -> {
-            return MenuResponseDto.builder()
-                           .code(menu.getCode())
-                           .name(menu.getName())
-                           .build();
-		}).collect(Collectors.toList());
+		return Arrays.stream(MenuEnum.values()).map(menu -> MenuResponseDto.builder()
+                       .code(menu.getCode())
+                       .name(menu.getName())
+                       .build()).collect(Collectors.toList());
 	}
 }

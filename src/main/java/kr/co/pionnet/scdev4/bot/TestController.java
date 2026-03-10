@@ -1,4 +1,4 @@
-package kr.co.pionnet.scdev4.bot.api.v1.controller;
+package kr.co.pionnet.scdev4.bot;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

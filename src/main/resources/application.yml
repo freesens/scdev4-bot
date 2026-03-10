@@ -45,7 +45,7 @@ telegram:
 
 public-data:
   api:
-    key: ENC(Jv2jrRljruPc2YmVdLAaOKVATnjwhRCxE4Gq5VSufBE72mIN1x4qb+v7hW+zOCwGQfbcYmycWEZPPoCZ5aHG4AiQmU0qT+c1gV929U2gigMqMCu8mubYQjhaGScuEQ1NwwiIgrnBx5dyX1Dbnjy+Bg==)
+    key: ENC(zf+BQ6At3s/skIC8PrgsOW3iPgSV7ln2QgCTtCbxSA+DrLV02pCW7ozrCLG1TPRpUrh4BLqa2MF+/dcN/W2pzez2avanu+3wSdfBQh3LvVyNKgEGEQ8aC+qKzjydFHWA8RGSVIb1uvjHH80Gx+cONQ==)
 
 code-review:
   target:

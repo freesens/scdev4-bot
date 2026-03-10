@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .error-box {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px 20px;
+            max-width: 420px;
+            margin: 0 auto;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .error-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .close-text {
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-box">
+    <div class="error-title">점심 메뉴</div>
+    <div class="error-message" th:text="${message}"></div>
+    <div class="close-text">이 창은 닫으셔도 됩니다.</div>
+</div>
+
+</body>
+</html>

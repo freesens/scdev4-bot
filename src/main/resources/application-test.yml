@@ -1,0 +1,12 @@
+spring:
+  thymeleaf:
+    cache: false
+
+telegram:
+  bot-token:
+    notice: ENC(0RIPOuVLGforx8xTdEco5kClPUctk6aksft4lWezX9vRxqEoPwm2qa4LwQgzMLoa4lqyZy+g6Xs=)
+    review: ENC(0RIPOuVLGforx8xTdEco5kClPUctk6aksft4lWezX9vRxqEoPwm2qa4LwQgzMLoa4lqyZy+g6Xs=)
+  chat-id:
+    dev4-all: ENC(opM7J0Khp3u9SkI6Y1QOgOaoai2Ub60F)
+    dev4-employee: ENC(opM7J0Khp3u9SkI6Y1QOgOaoai2Ub60F)
+    code-review: ENC(opM7J0Khp3u9SkI6Y1QOgOaoai2Ub60F)

@@ -1,11 +1,11 @@
-package kr.co.pionnet.scdev4.bot.api.v1.controller;
+package kr.co.pionnet.scdev4.bot.domain.notice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.pionnet.scdev4.bot.domain.common.dto.v1.ResponseV1;
 import kr.co.pionnet.scdev4.bot.domain.common.entity.ApiResultEnum;
 import kr.co.pionnet.scdev4.bot.domain.notice.service.NoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "알림봇", description = "텔레그램 채널로 메시지를 전송하는 API Section")
 @RequestMapping("api/v1/notice")
+@RequiredArgsConstructor
 public class NoticeController {
 
-    private NoticeService noticeService;
-
-    @Autowired
-    public NoticeController(NoticeService noticeService) {
-        this.noticeService = noticeService;
-    }
+    private final NoticeService noticeService;
 
     @Operation(summary = "점심 메뉴 추천", description = "오늘의 점심 메뉴 및 담당자 정/부를 추천 해줍니다.")
     @GetMapping("/lunch/menu")

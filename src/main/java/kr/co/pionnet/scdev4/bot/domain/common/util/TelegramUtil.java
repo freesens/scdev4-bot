@@ -46,7 +46,7 @@ public class TelegramUtil {
             conn.setDoOutput(true);
             conn.setDoInput(true);
 
-            String params = "text=" + StringUtils.toEncodedString(message.getBytes(), StandardCharsets.UTF_8);
+            String params = "text=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
             wr.write(params.getBytes(StandardCharsets.UTF_8));
             wr.flush();
