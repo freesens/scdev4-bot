@@ -1,4 +1,4 @@
-package kr.co.pionnet.scdev4.bot.api.v1.common.config;
+package kr.co.pionnet.scdev4.bot.domain.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
