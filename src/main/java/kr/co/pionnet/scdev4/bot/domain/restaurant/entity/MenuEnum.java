@@ -75,6 +75,8 @@ public enum MenuEnum {
 	MENU66("menu66", "쏭타이치앙마이"),
 	MENU67("menu67", "잭슨피자"),
 	MENU68("menu68", "푸라닭"),
+	MENU69("menu69", "구락"),
+	MENU70("menu70", "윤샌드"),
 	MENU999("menu999", "분식 배달");
 
 	private final String code;
