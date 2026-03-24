@@ -28,7 +28,7 @@ public enum MenuEnum {
 	MENU19("menu19", "어식한상"), 
 	MENU20("menu20", "종로계림닭도리탕"), 
 	MENU21("menu21", "이태리부대찌개"),
-	MENU22("menu22", "담방담방"), 
+	MENU22("menu22", "삼찬옥"), 
 	MENU23("menu23", "제주담돌"),
 	MENU24("menu24", "담솥"), 
 	MENU25("menu25", "홍박식당"), 
