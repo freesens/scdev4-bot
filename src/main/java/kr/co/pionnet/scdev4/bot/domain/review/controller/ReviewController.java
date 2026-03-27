@@ -21,7 +21,7 @@ public class ReviewController {
 
     @Operation(summary = "github Webhooks", description = "github에서 전송되는 코드 변경사항을 파싱하여, 리뷰 관련 채널로 메시지를 전송합니다.")
     @PostMapping("/github-webhook")
-    public ResponseV1<String> lunchMenu(final HttpServletRequest request) throws Exception {
+    public ResponseV1<String> github2WebHook(final HttpServletRequest request) throws Exception {
         return ResponseV1.<String>builder(ApiResultEnum.SUCCESS.getCode(), ApiResultEnum.SUCCESS.getMessage())
                          .data(githubWebhookService.parseToMessage(request))
                          .build();
