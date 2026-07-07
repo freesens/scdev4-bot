@@ -57,4 +57,12 @@ public class NoticeController {
                          .data(noticeService.checkAccount())
                          .build();
     }
+
+    @Operation(summary = "팀 주간회의 알림", description = "팀 주간회의 진행 예정 안내 메시지를 보내줍니다.")
+    @GetMapping("/weekly-meeting")
+    public ResponseV1<String> weeklyMeeting() throws Exception {
+        return ResponseV1.<String>builder(ApiResultEnum.SUCCESS.getCode(), ApiResultEnum.SUCCESS.getMessage())
+                         .data(noticeService.weeklyMeeting())
+                         .build();
+    }
 }
