@@ -10,8 +10,7 @@ public enum MemberEnum {
 	NAME7("제로"),
 	NAME8("비움"),
 	NAME9("소팔"),
-	NAME10("쓸모"),
-	NAME11("오이");
+	NAME10("오이");
 
 	private final String value;
 
