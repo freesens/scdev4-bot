@@ -213,4 +213,28 @@ public class NoticeService {
 
         return result.toString();
     }
+
+    public String weeklyMeeting() throws Exception {
+        StringBuilder result = new StringBuilder();
+        JSONObject resultJson = new JSONObject();
+
+        try {
+            result.append("금일 2시 소회의실B에서 팀 주간회의 진행 예정입니다.");
+
+            if (log.isDebugEnabled()) {
+                log.debug(result.toString());
+            }
+
+            if (!publicDataApiUtil.isHoliday()) {
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
+            }
+
+            resultJson.put("result", "Success");
+        } finally {
+            result.setLength(0);
+            result.append(resultJson);
+        }
+
+        return result.toString();
+    }
 }
