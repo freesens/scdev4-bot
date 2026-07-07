@@ -226,7 +226,7 @@ public class NoticeService {
             }
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
+                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4);
             }
 
             resultJson.put("result", "Success");
