@@ -4,7 +4,7 @@ public enum MemberEnum {
 	NAME1("파민"),
 	NAME2("자연"),
 	NAME3("돌+I"),
-	NAME4("레몬"),
+	NAME4("허리"),
 	NAME5("제육"),
 	NAME6("위키"),
 	NAME7("제로"),
