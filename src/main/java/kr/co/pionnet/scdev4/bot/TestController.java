@@ -16,7 +16,7 @@ import java.util.Date;
 @RequestMapping("api/v1/test")
 public class TestController {
 
-    @Operation(summary = "서버 시간", description = "알려준다!!  현재 서버 시간.")
+    @Operation(summary = "서버 시간", description = "알려준다!!  현재 서버 시간")
     @GetMapping("/today")
     public ResponseV1<String> test() {
         return ResponseV1.<String>builder(ApiResultEnum.SUCCESS.getCode(), ApiResultEnum.SUCCESS.getMessage())

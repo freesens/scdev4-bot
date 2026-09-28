@@ -4,14 +4,13 @@ public enum MemberEnum {
 	NAME1("파민"),
 	NAME2("자연"),
 	NAME3("돌+I"),
-	NAME4("레몬"),
+	NAME4("허리"),
 	NAME5("제육"),
 	NAME6("위키"),
 	NAME7("제로"),
 	NAME8("비움"),
 	NAME9("소팔"),
-	NAME10("쓸모"),
-	NAME11("오이");
+	NAME10("오이");
 
 	private final String value;
 
