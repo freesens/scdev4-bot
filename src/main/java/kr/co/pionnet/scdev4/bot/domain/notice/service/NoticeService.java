@@ -5,6 +5,7 @@ import kr.co.pionnet.scdev4.bot.domain.common.entity.ApiResultEnum;
 import kr.co.pionnet.scdev4.bot.domain.common.util.PublicDataApiUtil;
 import kr.co.pionnet.scdev4.bot.domain.common.util.TelegramUtil;
 import kr.co.pionnet.scdev4.bot.domain.notice.entity.BarEnum;
+import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.LunchMentAnimationEnum;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.LunchMentEnum;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.MemberEnum;
 import kr.co.pionnet.scdev4.bot.domain.restaurant.entity.MenuEnum;
@@ -119,13 +120,10 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            int value;
-
-            value = new Random().nextInt(LunchMentEnum.values().length);
-            result.append(LunchMentEnum.values()[value].getValue());
+            result.append(LunchMentEnum.values()[new Random().nextInt(LunchMentEnum.values().length)].getValue());
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendMessage(result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
+                telegramUtil.sendAnimation(LunchMentAnimationEnum.values()[new Random().nextInt(LunchMentAnimationEnum.values().length)].getValue(), result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
