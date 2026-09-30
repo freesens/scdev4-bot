@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -120,10 +120,10 @@ public class NoticeService {
         JSONObject resultJson = new JSONObject();
 
         try {
-            result.append(LunchMentEnum.values()[new Random().nextInt(LunchMentEnum.values().length)].getValue());
+            result.append(LunchMentEnum.values()[ThreadLocalRandom.current().nextInt(LunchMentEnum.values().length)].getValue());
 
             if (!publicDataApiUtil.isHoliday()) {
-                telegramUtil.sendAnimation(LunchMentAnimationEnum.values()[new Random().nextInt(LunchMentAnimationEnum.values().length)].getValue(), result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
+                telegramUtil.sendAnimation(LunchMentAnimationEnum.values()[ThreadLocalRandom.current().nextInt(LunchMentAnimationEnum.values().length)].getValue(), result.toString(), BOT_TOKEN_NOTICE, CHAT_ID_SCDEV4_ALL);
             }
 
             resultJson.put("result", "Success");
@@ -163,7 +163,7 @@ public class NoticeService {
 
         try {
             String bar;
-            int value = new Random().nextInt(5);
+            int value = ThreadLocalRandom.current().nextInt(BarEnum.values().length);
 
             bar = BarEnum.values()[value].getValue();
 
